@@ -1,4 +1,5 @@
 plugins {
+    id 'groovy'
     id 'base'
     id 'com.palantir.docker' version '0.25.0'
     id 'com.palantir.docker-run' version '0.25.0'
@@ -16,6 +17,19 @@ dockerRun {
     name "${project.name}"
     image "${project.name}:${project.version}"
     ports '8080:8080'
+    volumes 'jenkins_home' : '/var/jenkins_home'
     clean true
     daemonize false
 }
+/**
+ * dockerRun {
+ name 'my-container'
+ image 'busybox'
+ volumes 'hostvolume': '/containervolume'
+ ports '7080:5000'
+ daemonize true
+ env 'MYVAR1': 'MYVALUE1', 'MYVAR2': 'MYVALUE2'
+ command 'sleep', '100'
+ arguments '--hostname=custom', '-P'
+ }
+ */
